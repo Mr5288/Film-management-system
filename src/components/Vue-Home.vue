@@ -29,7 +29,7 @@
       </div>
     </el-header>
     <!-- 主体区域 -->
-    <el-container>
+    <el-container style="height: 500px;">
       <!-- 侧边栏 -->
       <el-aside :width="isCollapse ? '64px':'200px'">
         <div class="toggle-button" @click="toggleColapse">|||</div>
@@ -72,6 +72,16 @@
                 <i class="el-icon-user-solid"></i>
                 <!-- 文本 -->
                 <span>用户列表</span>
+              </template>
+            </el-menu-item>
+            <!-- 二级菜单 -->
+            <el-menu-item index="/adminList" @click="saveNavState('/adminList')">
+              <!-- 二级菜单模板区域 -->
+              <template slot="title">
+                <!-- 图标 -->
+                <i class="el-icon-user-solid"></i>
+                <!-- 文本 -->
+                <span>管理员列表</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -232,6 +242,7 @@ export default {
 <style lang="less" scoped>
 .home_container {
   height: 100%;
+  overflow-y: hidden;
 }
 .el-header {
   display: flex;
@@ -298,6 +309,7 @@ export default {
   box-shadow: -1px 0 4px rgb(0 0 0 / 12%);
   text-align: center;
   line-height: 44px;
+  border-top: 1px solid #ddd;
   background-color: #fafafa;
 }
 </style>

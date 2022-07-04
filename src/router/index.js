@@ -4,6 +4,7 @@ import VueLogin from '../components/Vue-Login.vue'
 import VueHome from '../components/Vue-Home.vue'
 import VueIndex from '../components/Vue-HomeIndex.vue'
 import VueUsers from '../components/user/Vue-Users.vue'
+import VueAdmin from '../components/user/Vue-Admin.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -15,7 +16,8 @@ const routes = [
     redirect: '/index',
     children: [
       { path: '/index', component: VueIndex },
-      { path: '/userList', component: VueUsers }
+      { path: '/userList', component: VueUsers },
+      { path: '/adminList', component: VueAdmin }
     ]
   }
 ]

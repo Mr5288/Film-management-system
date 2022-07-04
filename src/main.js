@@ -12,6 +12,10 @@ Vue.prototype.$http = axios
 Vue.prototype.Qs = Qs
 // 配置请求根路径
 axios.defaults.baseURL = 'http://127.0.1:3007'
+axios.interceptors.request.use(config => {
+  config.headers.Authorization = window.sessionStorage.getItem('token')
+  return config
+})
 new Vue({
   router,
   store,

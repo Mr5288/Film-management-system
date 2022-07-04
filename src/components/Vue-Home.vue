@@ -9,6 +9,7 @@
           <img src="../../public/img/pic2.jpg" alt="">
         </div>
         <div class="self">
+          <!-- 导航栏头像区 -->
           <el-menu mode="horizontal" background-color="#001529" text-color="#fff" active-text-color="null">
             <el-submenu index="2">
               <template slot="title">我</template>
@@ -16,6 +17,7 @@
               <el-menu-item index="2-2" @click="dialogVisible = true">退出登录</el-menu-item>
             </el-submenu>
           </el-menu>
+          <!-- 退出系统弹窗 -->
           <el-dialog title="提示" :visible.sync="dialogVisible" top="20vh" width="20%">
             <span>确认退出吗</span>
             <span slot="footer" class="dialog-footer">
@@ -32,7 +34,7 @@
       <el-aside :width="isCollapse ? '64px':'200px'">
         <div class="toggle-button" @click="toggleColapse">|||</div>
         <!-- 侧边栏菜单区 -->
-        <el-menu background-color="#23262e" text-color="#fff" active-text-color="#ffd04b" :collapse="isCollapse" :collapse-transition="false" router :default-active="activePath">
+        <el-menu background-color="#23262e" text-color="#fff" active-text-color="#ffd04b" :collapse="isCollapse" :collapse-transition="false" router :default-active="$route.path">
           <!-- 系统首页一级菜单 -->
           <el-submenu index="1">
             <!-- 一级菜单模板区域 -->
@@ -264,7 +266,7 @@ export default {
   background-color: #f3f2ee;
 }
 .el-aside {
-  transition: all 0.4s ease-in-out;
+  transition: all 1s ease-in-out;
   background-color: #23262e;
   overflow-x: hidden;
   .el-menu {

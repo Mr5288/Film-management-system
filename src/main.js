@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.prototype.Qs = Qs
 // 配置请求根路径
-axios.defaults.baseURL = 'http://127.0.1:3007/api'
+axios.defaults.baseURL = 'http://127.0.1:3007'
 new Vue({
   router,
   store,

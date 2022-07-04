@@ -68,7 +68,7 @@ export default {
     login () {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return
-        const { data: res } = await this.$http.post('user-login',
+        const { data: res } = await this.$http.post('api/user-login',
           this.Qs.stringify({
             username: this.loginForm.username,
             password: this.loginForm.password

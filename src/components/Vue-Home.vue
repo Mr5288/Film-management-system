@@ -36,7 +36,7 @@
         <!-- 侧边栏菜单区 -->
         <el-menu background-color="#23262e" text-color="#fff" active-text-color="#ffd04b" :collapse="isCollapse" :collapse-transition="false" router :default-active="$route.path">
           <!-- 系统首页一级菜单 -->
-          <el-submenu index="1">
+          <el-submenu index="index">
             <!-- 一级菜单模板区域 -->
             <template slot="title">
               <!-- 图标 -->
@@ -45,7 +45,7 @@
               <span style="font-size:20px">系统首页</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item index="/index" @click="saveNavState('/index')">
+            <el-menu-item @click="saveNavState('/index')" index="/index">
               <!-- 二级菜单模板区域 -->
               <template slot="title">
                 <!-- 图标 -->
@@ -55,142 +55,24 @@
               </template>
             </el-menu-item>
           </el-submenu>
-          <!-- 用户管理一级菜单 -->
-          <el-submenu index="2">
+
+          <!-- 循环首页一级菜单 -->
+          <el-submenu :index="item.id+''" v-for="item in roles" :key="item.id">
             <!-- 一级菜单模板区域 -->
             <template slot="title">
               <!-- 图标 -->
-              <i class="el-icon-user"></i>
+              <i :class="iconsObj[item.id]"></i>
               <!-- 文本 -->
-              <span>用户管理</span>
+              <span style="font-size:20px">{{item.powername}}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item index="/userList" @click="saveNavState('/userList')">
+            <el-menu-item :index="'/'+subItem.path" @click="saveNavState('/'+subItem.path)" v-for="subItem in item.children" :key="subItem.id">
               <!-- 二级菜单模板区域 -->
               <template slot="title">
                 <!-- 图标 -->
-                <i class="el-icon-user-solid"></i>
+                <i :class="iconsObj[subItem.id]"></i>
                 <!-- 文本 -->
-                <span>用户列表</span>
-              </template>
-            </el-menu-item>
-            <!-- 二级菜单 -->
-            <el-menu-item index="/adminList" @click="saveNavState('/adminList')">
-              <!-- 二级菜单模板区域 -->
-              <template slot="title">
-                <!-- 图标 -->
-                <i class="el-icon-user-solid"></i>
-                <!-- 文本 -->
-                <span>管理员列表</span>
-              </template>
-            </el-menu-item>
-          </el-submenu>
-          <!-- 权限管理一级菜单 -->
-          <el-submenu index="3">
-            <!-- 一级菜单模板区域 -->
-            <template slot="title">
-              <!-- 图标 -->
-              <i class="el-icon-setting"></i>
-              <!-- 文本 -->
-              <span>权限管理</span>
-            </template>
-            <!-- 二级菜单 -->
-            <el-menu-item index="/authorityList" @click="saveNavState('/index')">
-              <!-- 二级菜单模板区域 -->
-              <template slot="title">
-                <!-- 图标 -->
-                <i class="el-icon-menu"></i>
-                <!-- 文本 -->
-                <span>权限列表</span>
-              </template>
-            </el-menu-item>
-          </el-submenu>
-          <!-- 电影管理一级菜单 -->
-          <el-submenu index="4">
-            <!-- 一级菜单模板区域 -->
-            <template slot="title">
-              <!-- 图标 -->
-              <i class="el-icon-video-play"></i>
-              <!-- 文本 -->
-              <span>电影管理</span>
-            </template>
-            <!-- 二级菜单 -->
-            <el-menu-item index="/movieList">
-              <!-- 二级菜单模板区域 -->
-              <template slot="title">
-                <!-- 图标 -->
-                <i class="el-icon-video-pause"></i>
-                <!-- 文本 -->
-                <span>电影列表</span>
-              </template>
-            </el-menu-item>
-          </el-submenu>
-          <!-- 订单管理一级菜单 -->
-          <el-submenu index="5">
-            <!-- 一级菜单模板区域 -->
-            <template slot="title">
-              <!-- 图标 -->
-              <i class="el-icon-document-copy"></i>
-              <!-- 文本 -->
-              <span>订单管理</span>
-            </template>
-            <!-- 二级菜单 -->
-            <el-menu-item index="/movieOrders">
-              <!-- 二级菜单模板区域 -->
-              <template slot="title">
-                <!-- 图标 -->
-                <i class="el-icon-document"></i>
-                <!-- 文本 -->
-                <span>电影订单</span>
-              </template>
-            </el-menu-item>
-            <el-menu-item index="/foodOrders">
-              <!-- 二级菜单模板区域 -->
-              <template slot="title">
-                <!-- 图标 -->
-                <i class="el-icon-document"></i>
-                <!-- 文本 -->
-                <span>小食订单</span>
-              </template>
-            </el-menu-item>
-          </el-submenu>
-          <!-- 放映管理一级菜单 -->
-          <el-submenu index="6">
-            <!-- 一级菜单模板区域 -->
-            <template slot="title">
-              <!-- 图标 -->
-              <i class="el-icon-video-camera"></i>
-              <!-- 文本 -->
-              <span>放映管理</span>
-            </template>
-            <!-- 二级菜单 -->
-            <el-menu-item index="/vedioList">
-              <!-- 二级菜单模板区域 -->
-              <template slot="title">
-                <!-- 图标 -->
-                <i class="el-icon-data-analysis"></i>
-                <!-- 文本 -->
-                <span>影厅列表</span>
-              </template>
-            </el-menu-item>
-          </el-submenu>
-          <!-- 小食管理一级菜单 -->
-          <el-submenu index="7">
-            <!-- 一级菜单模板区域 -->
-            <template slot="title">
-              <!-- 图标 -->
-              <i class="el-icon-fork-spoon"></i>
-              <!-- 文本 -->
-              <span>小食管理</span>
-            </template>
-            <!-- 二级菜单 -->
-            <el-menu-item index="/foodList">
-              <!-- 二级菜单模板区域 -->
-              <template slot="title">
-                <!-- 图标 -->
-                <i class="el-icon-potato-strips"></i>
-                <!-- 文本 -->
-                <span>小食列表</span>
+                <span>{{subItem.powername}}</span>
               </template>
             </el-menu-item>
           </el-submenu>
@@ -215,10 +97,32 @@ export default {
       isCollapse: false,
       // 被激活的链接地址
       activePath: '',
-      dialogVisible: false
+      dialogVisible: false,
+      roles: [], // 角色信息
+      iconsObj: {
+        1: 'el-icon-user',
+        2: 'el-icon-setting',
+        3: 'el-icon-video-play',
+        4: 'el-icon-video-camera',
+        5: 'el-icon-document-copy',
+        6: 'el-icon-fork-spoon',
+        7: 'el-icon-user-solid',
+        8: 'el-icon-user-solid',
+        9: 'el-icon-menu',
+        10: 'el-icon-video-pause',
+        11: 'el-icon-data-analysis',
+        12: 'el-icon-data-analysis',
+        13: 'el-icon-data-analysis',
+        14: 'el-icon-document',
+        15: 'el-icon-document',
+        16: 'el-icon-potato-strips'
+
+      }
     }
   },
   created () {
+    // 获取角色权限
+    this.getRolePower()
     this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
@@ -235,7 +139,17 @@ export default {
     logOut () {
       window.sessionStorage.clear()
       this.$router.push('/login')
+    },
+    // 获取角色权限
+    async getRolePower () {
+      const { data: res } = await this.$http.get('rolepower')
+      this.roles = this.arrayToTree(res.data, {
+        parentProperty: 'pid',
+        customID: 'id',
+        childrenProperty: 'children'
+      })
     }
+
   }
 }
 </script>
@@ -277,7 +191,7 @@ export default {
   background-color: #f3f2ee;
 }
 .el-aside {
-  transition: all 1s ease-in-out;
+  transition: all 0.4s ease-in-out;
   background-color: #23262e;
   overflow-x: hidden;
   .el-menu {

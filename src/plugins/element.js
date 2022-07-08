@@ -27,7 +27,8 @@ import {
   Table,
   TableColumn,
   Pagination,
-  MessageBox
+  MessageBox,
+  Tree
 } from 'element-ui'
 Vue.use(Button)
 Vue.use(Form)
@@ -55,5 +56,6 @@ Vue.use(Option)
 Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Pagination)
+Vue.use(Tree)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

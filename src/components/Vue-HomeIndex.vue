@@ -11,8 +11,8 @@
             <img src="../../public/img/pic2.jpg" alt="">
           </div>
           <div class="name">
-            <p>Mr.Li</p>
-            <p>超级管理员</p>
+            <p>{{adminInfo.username}}</p>
+            <p>{{adminInfo.role}}</p>
           </div>
         </div>
         <!-- 下部分 -->
@@ -101,41 +101,20 @@ export default {
       value: new Date(),
       timer: '', // 定义一个定时器的变量
       nowTime:
-        new Date().getHours() +
-        ':' +
-        new Date().getMinutes() +
-        ':' +
-        new Date().getSeconds(), // 获取当前时间
-      erd: null
+        new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), // 获取当前时间
+      erd: null,
+      adminInfo: [] // 管理员信息
     }
   },
   created () {
-    // 时钟
-    const vm = this
-    vm.timer = setInterval(() => {
-      const hour = vm.appendZero(new Date().getHours())
-      const minute = vm.appendZero(new Date().getMinutes())
-      const second = vm.appendZero(new Date().getSeconds())
-      // 修改数据date
-      vm.nowTime = hour + ':' + minute + ':' + second
-    }, 1000)
+    // 获取管理员信息
+    this.getAdminInfo()
+    this.getTime()
   },
   mounted () {
     this.bar() // 重绘图表
     this.initCharts()// 初始化图表
-    setTimeout(() => {
-      const erd = elementResizeDetectorMaker()
-      erd.listenTo(document.querySelector('.el-main'),
-        () => {
-          // const width = element.offsetWidth
-          this.$nextTick(function () {
-            // 使echarts尺寸重置
-            this.chartColumnarSize.resize()
-            this.chartLineSize.resize()
-            this.chartPieSize.resize()
-          })
-        })
-    }, 1000)
+    this.initEchartsRrsize()// 根据大小初始化图表
   },
   beforeDestroy () {
     if (this.timer) {
@@ -144,8 +123,19 @@ export default {
     // 离开页面删除检测器和所有侦听器
     elementResizeDetectorMaker().uninstall(document.querySelector('.el-main'))
   },
-
   methods: {
+    // 获取时间
+    getTime () {
+      // 时钟
+      const vm = this
+      vm.timer = setInterval(() => {
+        const hour = vm.appendZero(new Date().getHours())
+        const minute = vm.appendZero(new Date().getMinutes())
+        const second = vm.appendZero(new Date().getSeconds())
+        // 修改数据date
+        vm.nowTime = hour + ':' + minute + ':' + second
+      }, 1000)
+    },
     // 时间过滤加0
     appendZero (obj) {
       if (obj < 10) {
@@ -321,6 +311,27 @@ export default {
       }
       // 使用刚指定的配置项和数据显示图表
       myChartLine.setOption(optionLine)
+    },
+    // 获取管理员信息
+    async getAdminInfo () {
+      const { data: res } = await this.$http.get('admininfo')
+      this.adminInfo = res.data
+    },
+    // 根据大小改变图表大小
+    initEchartsRrsize () {
+      setTimeout(() => {
+        const erd = elementResizeDetectorMaker()
+        erd.listenTo(document.querySelector('.el-main'),
+          () => {
+            // const width = element.offsetWidth
+            this.$nextTick(function () {
+              // 使echarts尺寸重置
+              this.chartColumnarSize.resize()
+              this.chartLineSize.resize()
+              this.chartPieSize.resize()
+            })
+          })
+      }, 1000)
     }
   }
 }

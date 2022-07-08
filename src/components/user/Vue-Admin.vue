@@ -6,40 +6,27 @@
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
       <el-breadcrumb-item>管理员列表</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-card>
-      <!-- 搜索与添加区 -->
-      <el-row :gutter="20">
-        <el-col :span="4">
-          <el-select v-model="value" placeholder="请选择">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.label">
-            </el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="6">
-          <el-input placeholder="请输入内容" clearable v-model="queryInfo.username" @clear="getUserList">
-            <el-button slot="append" icon="el-icon-search" @click="getUserList">搜索</el-button>
-          </el-input>
-        </el-col>
-        <el-col :span="6">
-          <el-button type="primary" @click="addDialogVisible=true">添加管理员</el-button>
-        </el-col>
-      </el-row>
-    </el-card>
     <!-- 管理员列表区 -->
     <el-card style="margin-top:25px">
-      <el-table :data="userlist" border stripe :header-cell-style="{'text-align':'center'} " :cell-style="{'text-align':'center'} ">
+      <el-button type="primary" @click="addDialogVisible=true" style="margin-bottom:25px">添加管理员</el-button>
+      <el-table :data="adminlist" border stripe :header-cell-style="{'text-align':'center'} " :cell-style="{'text-align':'center'} ">
         <el-table-column label="ID" prop="id" min-width=40px></el-table-column>
         <el-table-column label="姓名" prop="username"></el-table-column>
         <el-table-column label="性别" prop="sex"></el-table-column>
+        <el-table-column label="角色" prop="role"></el-table-column>
         <el-table-column label="出生日期" prop="birthday"></el-table-column>
         <el-table-column label="电子邮箱" prop="email"></el-table-column>
         <el-table-column label="联系电话" prop="phone"></el-table-column>
-        <el-table-column label="注册时间" prop="creat_time"></el-table-column>
-        <el-table-column label="操作" min-width=110px>
+        <el-table-column label="注册时间" width="200">
+          <template slot-scope="scope">
+            {{dayjs(scope.row.creat_time).format("YYYY-MM-DD HH:mm:ss")}}
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="276">
           <template slot-scope="scope">
             <el-button type="primary" size="small" icon="el-icon-edit" @click="showEditDialog(scope.row.id)">编辑</el-button>
             <el-button type="danger" size="small" icon="el-icon-delete" @click="removeUserById(scope.row.id)">删除</el-button>
-            <el-button type="warning" size="small" icon="el-icon-setting" @click="removeUserById(scope.row.id)">权限</el-button>
+            <el-button type="warning" size="small" icon="el-icon-setting" @click="setRole(scope.row)">权限</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -90,6 +77,25 @@
         <el-button type="primary" @click="editUserInfo">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 分配角色的对话框 -->
+    <el-dialog title="分配角色" :visible.sync="setRoleDialogVisible" width="30%" :close-on-click-modal="false" @close="setRoleDialogClosed">
+      <!-- 内容主体区 -->
+      <div>
+        <p>当前用户：{{adminnFoleInfo.username}}</p>
+        <p>当前角色：{{adminnFoleInfo.role}}</p>
+        <p>分配新角色：
+          <el-select v-model="selectedRoleId" placeholder="请选择">
+            <el-option v-for="item in rolesList" :key="item.id" :label="item.rolesname" :value="item.id">
+            </el-option>
+          </el-select>
+        </p>
+      </div>
+      <!-- 底部区 -->
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="setRoleDialogVisible=false">取 消</el-button>
+        <el-button type="primary" @click="saveRoleInfo">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -125,10 +131,14 @@ export default {
         sex: '', // 性别
         username: '' // 管理员名
       },
-      userlist: [], // 管理员列表
+      adminlist: [], // 管理员列表
       total: 0, // 总条数
       addDialogVisible: false, // 控制添加管理员对话框的显示与隐藏
       editDialogVisible: false, // 控制修改管理员对话框的显示与隐藏
+      setRoleDialogVisible: false, // 分配角色对话框的显示与隐藏
+      adminnFoleInfo: {}, // 管理员权限弹框信息
+      rolesList: [], // 获取角色列表
+      selectedRoleId: '', // 已选中的角色ID值
       // 添加管理员的表单数据
       addForm: {
         username: '',
@@ -170,31 +180,31 @@ export default {
     }
   },
   created () {
-    this.getUserList()
+    this.getAdminList()
   },
   methods: {
     // 获取管理员列表事件
-    async getUserList () {
+    async getAdminList () {
       const { data: res } = await this.$http(
         {
           method: 'get',
-          url: 'my/article/cates',
+          url: 'adminlist',
           params: this.queryInfo
         })
       if (res.status !== 0) return this.$message.error('获取管理员数据失败!')
-      this.userlist = res.data
+      this.adminlist = res.data
       this.total = res.total
     },
     // 监听pagesize改变的事件
     handleSizeChange (newSize) {
       console.log(newSize)
       this.queryInfo.pagesize = newSize
-      this.getUserList()
+      this.getAdminList()
     },
     // 监听页码值改变事件
     handleCurrentChange (newPage) {
       this.queryInfo.pagenum = newPage
-      this.getUserList()
+      this.getAdminList()
     },
     // 监听添加管理员对话框关闭事件
     addDialogClosed () {
@@ -206,7 +216,7 @@ export default {
         if (!valid) return
         const { data: res } = await this.$http({
           method: 'post',
-          url: 'my/article/adduser',
+          url: 'addadmin',
           data: this.Qs.stringify(this.addForm)
         })
         if (res.status !== 0) {
@@ -214,7 +224,7 @@ export default {
         }
         this.$message.success('添加管理员成功！')
         this.addDialogVisible = false
-        this.getUserList()
+        this.getAdminList()
       })
     },
     // 展示编辑管理员对话框
@@ -222,7 +232,7 @@ export default {
       this.editDialogVisible = true
       const { data: res } = await this.$http({
         method: 'get',
-        url: 'my/article/getuserinfo/' + id
+        url: 'getuserinfo/' + id
       })
       if (res.status !== 0) return this.$message.error('获取管理员信息失败')
       this.editForm = res.data
@@ -238,7 +248,7 @@ export default {
         // 发起修改管理员信息的请求
         const { data: res } = await this.$http({
           method: 'post',
-          url: 'my/article/updateuser',
+          url: 'updateadmin',
           data:
             this.Qs.stringify({
               email: this.editForm.email,
@@ -246,12 +256,11 @@ export default {
               id: this.editForm.id
             })
         })
-        console.log(res)
         if (res.status !== 0) return this.$message.error('更新管理员数据失败！')
         // 关闭对话框
         this.editDialogVisible = false
         // 刷新数据列表
-        this.getUserList()
+        this.getAdminList()
         // 提示修改成功
         this.$message.success('更新管理员数据成功')
       })
@@ -269,12 +278,41 @@ export default {
       if (confirmRessult !== 'confirm') return
       const { data: res } = await this.$http({
         method: 'get',
-        url: 'my/article/deletecate/' + id
+        url: 'deleteadmin/' + id
       })
 
       if (res.status !== 0) return this.$message.error('删除管理员失败！')
       this.$message.success('删除管理员成功！')
-      this.getUserList()
+      this.getAdminList()
+    },
+    // 分配角色
+    async setRole (adminnFoleInfo) {
+      this.adminnFoleInfo = adminnFoleInfo
+      // 在展示对话框之前获取角色列表
+      const { data: res } = await this.$http.get('rolelist')
+      this.rolesList = res.data
+      this.setRoleDialogVisible = true
+    },
+    // 点击按钮分配角色
+    async saveRoleInfo () {
+      if (!this.selectedRoleId) return this.$message.error('请选择要分配的角色！')
+      const { data: res } = await this.$http({
+        method: 'post',
+        url: 'setrole',
+        data: this.Qs.stringify({
+          id: this.selectedRoleId,
+          adminname: this.adminnFoleInfo.username
+        })
+      })
+      if (res.status !== 0) return this.$message.error('修改管理员角色失败！')
+      this.$message.success('修改管理员角色成功！')
+      this.getAdminList()
+      this.setRoleDialogVisible = false
+    },
+    // 监听分配角色的对话框关闭事件
+    setRoleDialogClosed () {
+      this.selectedRoleId = ''
+      this.adminnFoleInfo = {}
     }
   }
 }

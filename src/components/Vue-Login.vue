@@ -35,7 +35,7 @@ export default {
     return {
       // 这是登录表单的数据绑定对象
       loginForm: {
-        username: 'admin',
+        username: 'Mr.Li',
         password: '000000',
         verification: '0000'
       },
@@ -68,7 +68,7 @@ export default {
     login () {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid) return
-        const { data: res } = await this.$http.post('api/user-login',
+        const { data: res } = await this.$http.post('http://127.0.0.1:3007/api/adminLogin',
           this.Qs.stringify({
             username: this.loginForm.username,
             password: this.loginForm.password

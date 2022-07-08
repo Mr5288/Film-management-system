@@ -8,8 +8,10 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "array-to-tree": "^3.3.2",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "dayjs": "^1.11.3",
     "echarts": "^5.3.3",
     "element-resize-detector": "^1.2.4",
     "element-ui": "^2.4.5",

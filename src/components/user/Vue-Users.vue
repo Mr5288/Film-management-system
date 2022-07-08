@@ -34,8 +34,12 @@
         <el-table-column label="出生日期" prop="birthday"></el-table-column>
         <el-table-column label="电子邮箱" prop="email"></el-table-column>
         <el-table-column label="联系电话" prop="phone"></el-table-column>
-        <el-table-column label="注册时间" prop="creat_time"></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="注册时间" width="200">
+          <template slot-scope="scope">
+            {{dayjs(scope.row.creat_time).format("YYYY-MM-DD HH:mm:ss")}}
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="276">
           <template slot-scope="scope">
             <el-button type="primary" size="small" icon="el-icon-edit" @click="showEditDialog(scope.row.id)">编辑</el-button>
             <el-button type="danger" size="small" icon="el-icon-delete" @click="removeUserById(scope.row.id)">删除</el-button>
@@ -177,7 +181,7 @@ export default {
       const { data: res } = await this.$http(
         {
           method: 'get',
-          url: 'my/article/cates',
+          url: 'userinfo',
           params: this.queryInfo
         })
       if (res.status !== 0) return this.$message.error('获取用户数据失败!')
@@ -205,7 +209,7 @@ export default {
         if (!valid) return
         const { data: res } = await this.$http({
           method: 'post',
-          url: 'my/article/adduser',
+          url: 'adduser',
           data: this.Qs.stringify(this.addForm)
         })
         if (res.status !== 0) {
@@ -221,7 +225,7 @@ export default {
       this.editDialogVisible = true
       const { data: res } = await this.$http({
         method: 'get',
-        url: 'my/article/getuserinfo/' + id
+        url: 'getuserinfo/' + id
       })
       if (res.status !== 0) return this.$message.error('获取用户信息失败')
       this.editForm = res.data
@@ -237,7 +241,7 @@ export default {
         // 发起修改用户信息的请求
         const { data: res } = await this.$http({
           method: 'post',
-          url: 'my/article/updateuser',
+          url: 'updateuser',
           data:
             this.Qs.stringify({
               email: this.editForm.email,
@@ -245,7 +249,6 @@ export default {
               id: this.editForm.id
             })
         })
-        console.log(res)
         if (res.status !== 0) return this.$message.error('更新用户数据失败！')
         // 关闭对话框
         this.editDialogVisible = false
@@ -268,7 +271,7 @@ export default {
       if (confirmRessult !== 'confirm') return
       const { data: res } = await this.$http({
         method: 'get',
-        url: 'my/article/deletecate/' + id
+        url: 'deleteuser/' + id
       })
 
       if (res.status !== 0) return this.$message.error('删除用户失败！')

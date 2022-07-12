@@ -39,7 +39,7 @@
             {{dayjs(scope.row.creat_time).format("YYYY-MM-DD HH:mm:ss")}}
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="276">
+        <el-table-column label="操作" width="200">
           <template slot-scope="scope">
             <el-button type="primary" size="small" icon="el-icon-edit" @click="showEditDialog(scope.row.id)">编辑</el-button>
             <el-button type="danger" size="small" icon="el-icon-delete" @click="removeUserById(scope.row.id)">删除</el-button>

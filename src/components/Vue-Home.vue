@@ -6,7 +6,7 @@
       <div class="title">有个影院后台管理系统</div>
       <div class="info">
         <div class="avatar">
-          <img src="../../public/img/pic2.jpg" alt="">
+          <img :src="$store.state.userInfo.user_pic" alt="">
         </div>
         <div class="self">
           <!-- 导航栏头像区 -->
@@ -124,6 +124,7 @@ export default {
     // 获取角色权限
     this.getRolePower()
     this.activePath = window.sessionStorage.getItem('activePath')
+    this.$store.dispatch('getUserInfo')
   },
   methods: {
     // 点击按钮，折叠与展开菜单

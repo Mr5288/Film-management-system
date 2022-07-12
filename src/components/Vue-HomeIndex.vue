@@ -8,17 +8,17 @@
         <div class="user-info">
           <!-- 上部分 -->
           <div class="pic">
-            <img src="../../public/img/pic2.jpg" alt="">
+            <img :src="$store.state.userInfo.user_pic" alt="">
           </div>
           <div class="name">
-            <p>{{adminInfo.username}}</p>
-            <p>{{adminInfo.role}}</p>
+            <p>{{$store.state.userInfo.username}}</p>
+            <p>{{$store.state.userInfo.role}}</p>
           </div>
         </div>
         <!-- 下部分 -->
         <div class="user-time">
-          <p>首次注册时间：2022-06-29 23:28</p>
-          <p>信息更新时间：2022-06-29 23:28</p>
+          <p>首次注册时间：{{dayjs($store.state.userInfo.creat_time).format("YYYY-MM-DD ")}}</p>
+          <p>信息更新时间：{{dayjs($store.state.userInfo.now_time).format("YYYY-MM-DD ")}}</p>
         </div>
       </div>
       <!-- 首页顶部右侧数据统计区 分上下两部分 -->
@@ -102,13 +102,11 @@ export default {
       timer: '', // 定义一个定时器的变量
       nowTime:
         new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), // 获取当前时间
-      erd: null,
-      adminInfo: [] // 管理员信息
+      erd: null
+
     }
   },
   created () {
-    // 获取管理员信息
-    this.getAdminInfo()
     this.getTime()
   },
   mounted () {
@@ -311,11 +309,6 @@ export default {
       }
       // 使用刚指定的配置项和数据显示图表
       myChartLine.setOption(optionLine)
-    },
-    // 获取管理员信息
-    async getAdminInfo () {
-      const { data: res } = await this.$http.get('admininfo')
-      this.adminInfo = res.data
     },
     // 根据大小改变图表大小
     initEchartsRrsize () {

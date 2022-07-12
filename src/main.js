@@ -14,12 +14,15 @@ Vue.prototype.$http = axios
 Vue.prototype.Qs = Qs
 Vue.prototype.dayjs = dayjs
 Vue.prototype.arrayToTree = arrayToTree
+
 // 配置请求根路径
 axios.defaults.baseURL = 'http://127.0.1:3007/my'
 axios.interceptors.request.use(config => {
   config.headers.Authorization = window.sessionStorage.getItem('token')
+
   return config
 })
+
 new Vue({
   router,
   store,

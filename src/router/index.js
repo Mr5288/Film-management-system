@@ -9,6 +9,7 @@ import VueRoles from '@/components/power/Vue-Roles.vue'
 import VueMovie from '@/components/movie/Vue-Movie.vue'
 import VueMovieOrder from '@/components/order/Vue-MovieOrder.vue'
 import VueFoodOrder from '@/components/order/Vue-FoodOrder.vue'
+import VueFood from '@/components/food/Vue-Food.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -25,7 +26,8 @@ const routes = [
       { path: '/roleslist', component: VueRoles },
       { path: '/movielist', component: VueMovie },
       { path: '/movieorder', component: VueMovieOrder },
-      { path: '/foodorder', component: VueFoodOrder }
+      { path: '/foodorder', component: VueFoodOrder },
+      { path: '/foodlist', component: VueFood }
     ]
   }
 ]

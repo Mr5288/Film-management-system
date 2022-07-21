@@ -91,9 +91,26 @@
 </template>
 <script>
 // 导入echarts图表
-import * as echarts from 'echarts'
+import * as echarts from 'echarts/core'
+import { TooltipComponent, ToolboxComponent, TitleComponent, GridComponent, LegendComponent } from 'echarts/components'
+import { PieChart, BarChart, LineChart } from 'echarts/charts'
+import { LabelLayout, UniversalTransition } from 'echarts/features'
+import { CanvasRenderer } from 'echarts/renderers'
 // 导入element-resize-detector 插件
 import elementResizeDetectorMaker from 'element-resize-detector'
+echarts.use([
+  GridComponent,
+  TitleComponent,
+  ToolboxComponent,
+  TooltipComponent,
+  LegendComponent,
+  LineChart,
+  BarChart,
+  PieChart,
+  UniversalTransition,
+  CanvasRenderer,
+  LabelLayout
+])
 // import debounce from '@/utils/debounce'
 export default {
   data () {

@@ -4,7 +4,7 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>影厅管理</el-breadcrumb-item>
-      <el-breadcrumb-item>一号厅</el-breadcrumb-item>
+      <el-breadcrumb-item>二号厅</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 影厅信息区域 -->
     <div class="cinemaContent">
@@ -14,12 +14,12 @@
             <img src="../../../public/img/cinma.jpg" alt="">
           </div>
           <div class="cinemaInfo ">
-            <h1>一号厅</h1>
+            <h1>二号厅</h1>
             <ul>
-              <li>类型：常规</li>
-              <li>座椅：普通</li>
-              <li>座位：108</li>
-              <li>规格：2D</li>
+              <li>类型：环影</li>
+              <li>座椅：沙发</li>
+              <li>座位：88</li>
+              <li>规格：3D</li>
               <el-button type="primary" style="margin-top:20px" @click="addDialogVisible=true">添加影片</el-button>
             </ul>
           </div>
@@ -150,7 +150,7 @@ export default {
       nowShowTimeNext: '',
       addForm: {
         movie_name: '',
-        cinema_name: '1号厅',
+        cinema_name: '2号厅',
         lan_ver: '',
         star_time: '',
         end_time: ''
@@ -237,7 +237,7 @@ export default {
     },
     // 获取排片信息
     async getcinemalist () {
-      const id = 1
+      const id = 2
       const { data: res } = await this.$http.get('getcinemalist/' + id)
       if (res.status !== 0) return this.$message.error('获取排片列表失败')
       else {

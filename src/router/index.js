@@ -10,6 +10,8 @@ import VueMovie from '@/components/movie/Vue-Movie.vue'
 import VueMovieOrder from '@/components/order/Vue-MovieOrder.vue'
 import VueFoodOrder from '@/components/order/Vue-FoodOrder.vue'
 import VueOne from '@/components/cinema/Vue-One.vue'
+import VueTwo from '@/components/cinema/Vue-Two.vue'
+import VueThree from '@/components/cinema/Vue-Three.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -27,7 +29,9 @@ const routes = [
       { path: '/movielist', component: VueMovie },
       { path: '/movieorder', component: VueMovieOrder },
       { path: '/foodorder', component: VueFoodOrder },
-      { path: '/hallone', component: VueOne }
+      { path: '/hallone', component: VueOne },
+      { path: '/halltwo', component: VueTwo },
+      { path: '/hallthree', component: VueThree }
     ]
   }
 ]

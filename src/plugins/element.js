@@ -29,7 +29,9 @@ import {
   Pagination,
   MessageBox,
   Tree,
-  Backtop
+  Backtop,
+  Collapse,
+  CollapseItem
 } from 'element-ui'
 Vue.use(Button)
 Vue.use(Form)
@@ -59,5 +61,7 @@ Vue.use(TableColumn)
 Vue.use(Pagination)
 Vue.use(Tree)
 Vue.use(Backtop)
+Vue.use(Collapse)
+Vue.use(CollapseItem)
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

@@ -30,12 +30,9 @@ import {
   MessageBox,
   Tree,
   Backtop,
-<<<<<<< HEAD
-  Drawer
-=======
+  Drawer,
   Collapse,
   CollapseItem
->>>>>>> cinema
 } from 'element-ui'
 Vue.use(Button)
 Vue.use(Form)
@@ -65,11 +62,8 @@ Vue.use(TableColumn)
 Vue.use(Pagination)
 Vue.use(Tree)
 Vue.use(Backtop)
-<<<<<<< HEAD
 Vue.use(Drawer)
-=======
 Vue.use(Collapse)
 Vue.use(CollapseItem)
->>>>>>> cinema
 Vue.prototype.$message = Message
 Vue.prototype.$confirm = MessageBox.confirm

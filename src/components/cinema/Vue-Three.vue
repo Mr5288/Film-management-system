@@ -177,6 +177,12 @@ export default {
   created () {
     this.getcinemalist()
   },
+  beforeDestroy () {
+    if (this.timer || this.timer1) {
+      clearInterval(this.timer) // 在Vue实例销毁前，清除我们的定时器
+      clearInterval(this.timer1)
+    }
+  },
   methods: {
     // 正在放映倒计时
     getTime () {

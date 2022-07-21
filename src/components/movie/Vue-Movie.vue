@@ -143,7 +143,7 @@
       </span>
     </el-dialog>
     <!-- 返回顶部区域 -->
-    <!-- <el-backtop target=".el-main" :bottom="100" class="el-icon-caret-top"></el-backtop> -->
+    <el-backtop target=".el-main" :bottom="100" class="el-icon-caret-top"></el-backtop>
   </div>
 </template>
 

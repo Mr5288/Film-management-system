@@ -10,7 +10,7 @@
       <!-- 搜索与添加区 -->
       <el-row :gutter="20">
         <el-col :span="4">
-          <el-select v-model="value" placeholder="请选择">
+          <el-select v-model="value" placeholder="筛选性别" clearable @change="showSelect">
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.label">
             </el-option>
           </el-select>
@@ -112,13 +112,10 @@ export default {
     }
     return {
       options: [{
-        value: '选项1',
-        label: ''
-      }, {
-        value: '选项2',
+        value: '1',
         label: '男'
       }, {
-        value: '选项3',
+        value: '0',
         label: '女'
       }],
       value: '',
@@ -277,6 +274,12 @@ export default {
       if (res.status !== 0) return this.$message.error('删除用户失败！')
       this.$message.success('删除用户成功！')
       this.getUserList()
+    },
+    // 筛选框事件
+    showSelect (sex) {
+      if (sex === '男') { this.queryInfo.sex = '男' } else if (sex === '女') { this.queryInfo.sex = '女' } else { this.queryInfo.sex = '' }
+      this.getUserList()
+      this.queryInfo.sex = ''
     }
   }
 }

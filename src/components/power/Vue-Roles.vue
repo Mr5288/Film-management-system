@@ -41,6 +41,7 @@
       <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="90px">
         <el-form-item label="角色名" prop="Rolesname">
           <el-input v-model="addForm.Rolesname"></el-input>
+          角色名不可起相似名例如：admin 与 admin2
         </el-form-item>
         <el-form-item label="角色描述" prop="role_description">
           <el-input v-model="addForm.role_description"></el-input>

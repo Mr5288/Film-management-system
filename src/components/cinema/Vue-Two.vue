@@ -14,12 +14,12 @@
             <img src="../../../public/img/cinma.jpg" alt="">
           </div>
           <div class="cinemaInfo ">
-            <h1>二号厅</h1>
+            <h1>一号厅</h1>
             <ul>
-              <li>类型：环影</li>
-              <li>座椅：沙发</li>
-              <li>座位：88</li>
-              <li>规格：3D</li>
+              <li>类型：常规</li>
+              <li>座椅：普通</li>
+              <li>座位：108</li>
+              <li>规格：2D</li>
               <el-button type="primary" style="margin-top:20px" @click="addDialogVisible=true">添加影片</el-button>
             </ul>
           </div>
@@ -243,6 +243,8 @@ export default {
     },
     // 获取排片信息
     async getcinemalist () {
+      clearInterval(this.timer)
+      clearInterval(this.timer1)
       const id = 2
       const { data: res } = await this.$http.get('getcinemalist/' + id)
       if (res.status !== 0) return this.$message.error('获取排片列表失败')
@@ -337,9 +339,16 @@ export default {
               id: this.editForm.id
             })
         })
-        if (res.status !== 0) return this.$message.error('更新排片信息数据失败！')
+        if (res.status !== 0) return this.$message.error(res.message)
         // 关闭对话框
         this.editDialogVisible = false
+        this.cinemalist1 = ''
+        this.cinemalist2 = ''
+        this.cinemalist = ''
+        this.nowShowTime = ''
+        this.nowShowTimeNext = ''
+        clearInterval(this.timer)
+        clearInterval(this.timer1)
         // 刷新数据列表
         this.getcinemalist()
         // 提示修改成功
@@ -363,8 +372,16 @@ export default {
 
       if (res.status !== 0) return this.$message.error('删除排片信息失败！')
       this.$message.success('删除排片信息成功！')
+      this.cinemalist1 = ''
+      this.cinemalist2 = ''
+      this.cinemalist = ''
+      this.nowShowTime = ''
+      this.nowShowTimeNext = ''
+      clearInterval(this.timer)
+      clearInterval(this.timer1)
       this.getcinemalist()
     }
+
   }
 }
 </script>

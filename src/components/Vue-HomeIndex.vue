@@ -31,8 +31,8 @@
               <i class="el-icon-user icon"></i>
             </div>
             <div class="data-right">
-              <p style="color:#2d8cf0">0000</p>
               <p>用户数量</p>
+              <p style="color:#2d8cf0">{{userSum.userSum}}</p>
             </div>
           </div>
           <!-- 今日订单 -->
@@ -41,8 +41,8 @@
               <i class="el-icon-tickets icon"></i>
             </div>
             <div class="data-right">
-              <p style="color:#64d572">0000</p>
               <p>今日订单</p>
+              <p style="color:#64d572">{{orderToday}}</p>
             </div>
           </div>
           <!-- 累计订单 -->
@@ -51,8 +51,8 @@
               <i class="el-icon-document-copy icon"></i>
             </div>
             <div class="data-right">
-              <p style="color:#f25e43">0000</p>
               <p>累计订单</p>
+              <p style="color:#f25e43">{{datas.orderSum}}</p>
             </div>
           </div>
           <!-- 累计营业额 -->
@@ -61,8 +61,8 @@
               <i class="el-icon-s-finance icon"></i>
             </div>
             <div class="data-right">
-              <p style="color:#fe8b8e">0000</p>
               <p>累计营业额</p>
+              <p style="color:#fe8b8e">{{datas.priceSum}}</p>
             </div>
           </div>
         </div>
@@ -119,12 +119,19 @@ export default {
       timer: '', // 定义一个定时器的变量
       nowTime:
         new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(), // 获取当前时间
-      erd: null
+      erd: null,
+      datas: {
+        orderSum: '',
+        priceSum: ''
+      },
+      userSum: '',
+      orderToday: '0'
 
     }
   },
   created () {
     this.getTime()
+    this.getData()
   },
   mounted () {
     this.bar() // 重绘图表
@@ -139,16 +146,21 @@ export default {
     elementResizeDetectorMaker().uninstall(document.querySelector('.el-main'))
   },
   methods: {
+    async getData () {
+      const { data: res } = await this.$http.get('getdata')
+      if (res.status !== 0) return this.$message.error('获取数据失败')
+      this.datas = res.data2[0]
+      this.userSum = res.data[0]
+    },
     // 获取时间
     getTime () {
       // 时钟
-      const vm = this
-      vm.timer = setInterval(() => {
-        const hour = vm.appendZero(new Date().getHours())
-        const minute = vm.appendZero(new Date().getMinutes())
-        const second = vm.appendZero(new Date().getSeconds())
+      this.timer = setInterval(() => {
+        const hour = this.appendZero(new Date().getHours())
+        const minute = this.appendZero(new Date().getMinutes())
+        const second = this.appendZero(new Date().getSeconds())
         // 修改数据date
-        vm.nowTime = hour + ':' + minute + ':' + second
+        this.nowTime = hour + ':' + minute + ':' + second
       }, 1000)
     },
     // 时间过滤加0
@@ -434,15 +446,15 @@ export default {
         .data-right {
           flex: 1;
           text-align: center;
-          p:nth-child(1) {
+          p:nth-child(2) {
             font-size: 30px;
             font-weight: 700;
             margin: 10px 0;
           }
-          p:nth-child(2) {
+          p:nth-child(1) {
             font-size: 14px;
             color: #999;
-            margin: 5px 0;
+            margin: 15px 0 10px 0;
           }
         }
       }

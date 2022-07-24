@@ -13,7 +13,7 @@
           <el-menu mode="horizontal" background-color="#001529" text-color="#fff" active-text-color="null">
             <el-submenu index="2">
               <template slot="title">我</template>
-              <el-menu-item index="2-1">个人中心</el-menu-item>
+              <el-menu-item index="/userinfo" @click="userInfo">个人中心</el-menu-item>
               <el-menu-item index="2-2" @click="dialogVisible = true">退出登录</el-menu-item>
             </el-submenu>
           </el-menu>
@@ -149,6 +149,9 @@ export default {
         customID: 'id',
         childrenProperty: 'children'
       })
+    },
+    userInfo () {
+      this.$router.push('/userinfo')
     }
 
   }

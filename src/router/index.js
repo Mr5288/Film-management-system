@@ -13,6 +13,7 @@ import VueFood from '@/components/food/Vue-Food.vue'
 import VueOne from '@/components/cinema/Vue-One.vue'
 import VueTwo from '@/components/cinema/Vue-Two.vue'
 import VueThree from '@/components/cinema/Vue-Three.vue'
+import VueUserInfo from '@/components/user/Vue-UserInfo.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -33,7 +34,8 @@ const routes = [
       { path: '/foodlist', component: VueFood },
       { path: '/hallone', component: VueOne },
       { path: '/halltwo', component: VueTwo },
-      { path: '/hallthree', component: VueThree }
+      { path: '/hallthree', component: VueThree },
+      { path: '/userinfo', component: VueUserInfo }
     ]
   }
 ]

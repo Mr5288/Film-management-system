@@ -91,26 +91,26 @@
 </template>
 <script>
 // 导入echarts图表
-import * as echarts from 'echarts/core'
-import { TooltipComponent, ToolboxComponent, TitleComponent, GridComponent, LegendComponent } from 'echarts/components'
-import { PieChart, BarChart, LineChart } from 'echarts/charts'
-import { LabelLayout, UniversalTransition } from 'echarts/features'
-import { CanvasRenderer } from 'echarts/renderers'
+
+// import { TooltipComponent, ToolboxComponent, TitleComponent, GridComponent, LegendComponent } from 'echarts/components'
+// import { PieChart, BarChart, LineChart } from 'echarts/charts'
+// import { LabelLayout, UniversalTransition } from 'echarts/features'
+// import { CanvasRenderer } from 'echarts/renderers'
 // 导入element-resize-detector 插件
 import elementResizeDetectorMaker from 'element-resize-detector'
-echarts.use([
-  GridComponent,
-  TitleComponent,
-  ToolboxComponent,
-  TooltipComponent,
-  LegendComponent,
-  LineChart,
-  BarChart,
-  PieChart,
-  UniversalTransition,
-  CanvasRenderer,
-  LabelLayout
-])
+// this.echarts.use([
+//   GridComponent,
+//   TitleComponent,
+//   ToolboxComponent,
+//   TooltipComponent,
+//   LegendComponent,
+//   LineChart,
+//   BarChart,
+//   PieChart,
+//   UniversalTransition,
+//   CanvasRenderer,
+//   LabelLayout
+// ])
 // import debounce from '@/utils/debounce'
 export default {
   data () {
@@ -172,18 +172,18 @@ export default {
       }
     },
     bar () {
-      this.chartColumnarSize = echarts.init(this.$refs.columnarDom)
-      this.chartLineSize = echarts.init(this.$refs.lineDom)
-      this.chartPieSize = echarts.init(this.$refs.pieDom)
+      this.chartColumnarSize = this.echarts.init(this.$refs.columnarDom)
+      this.chartLineSize = this.echarts.init(this.$refs.lineDom)
+      this.chartPieSize = this.echarts.init(this.$refs.pieDom)
     },
     // 初始化图表
     initCharts () {
       // 柱状图表
-      const myChartColumnar = echarts.init(this.$refs.columnarDom)
+      const myChartColumnar = this.echarts.init(this.$refs.columnarDom)
       // 饼状图表
-      const myChartPie = echarts.init(this.$refs.pieDom)
+      const myChartPie = this.echarts.init(this.$refs.pieDom)
       // // 折线图
-      const myChartLine = echarts.init(this.$refs.lineDom)
+      const myChartLine = this.echarts.init(this.$refs.lineDom)
       this.showChart(myChartColumnar, myChartPie, myChartLine)
     },
     // 展示图表

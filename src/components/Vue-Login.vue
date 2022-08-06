@@ -167,7 +167,8 @@ export default {
   height: 100%;
   min-width: 600px;
   min-height: 400px;
-  background: url(../../public/img/bg.jpg) round;
+  background: url(../../public/img/bg.jpg) no-repeat;
+  background-size: 100% 100%;
 }
 .login_box {
   width: 520px;

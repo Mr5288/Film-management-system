@@ -147,7 +147,6 @@ export default {
     },
     // 监听pagesize改变的事件
     handleSizeChange (newSize) {
-      console.log(newSize)
       this.queryInfo.pagesize = newSize
       this.getOrderlist()
     },

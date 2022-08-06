@@ -197,7 +197,6 @@ export default {
     },
     // 监听pagesize改变的事件
     handleSizeChange (newSize) {
-      console.log(newSize)
       this.queryInfo.pagesize = newSize
       this.getAdminList()
     },
@@ -305,7 +304,7 @@ export default {
         })
       })
       if (res.status !== 0) return this.$message.error('修改管理员角色失败！')
-      this.$message.success('修改管理员角色成功！')
+      this.$message.success('修改管理员角色成功！,请重新登录后查看！')
       this.getAdminList()
       this.setRoleDialogVisible = false
     },

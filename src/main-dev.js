@@ -8,8 +8,9 @@ import axios from 'axios'
 import Qs from 'qs'
 import dayjs from 'dayjs'
 import arrayToTree from 'array-to-tree'
-import NProgress from 'nprogress'
+import Nrogress from 'nprogress'
 import 'nprogress/nprogress.css'
+
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 Vue.prototype.Qs = Qs
@@ -18,15 +19,16 @@ Vue.prototype.arrayToTree = arrayToTree
 
 // 配置请求根路径
 axios.defaults.baseURL = 'http://127.0.1:3007/my'
-
-// 在request拦截器中展示进度条
 axios.interceptors.request.use(config => {
+  Nrogress.start()
   config.headers.Authorization = window.sessionStorage.getItem('token')
-  NProgress.start()
+
   return config
 })
+
 axios.interceptors.response.use(config => {
-  NProgress.done()
+  Nrogress.done()
+
   return config
 })
 

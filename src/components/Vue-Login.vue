@@ -12,12 +12,15 @@
         <!-- 密码 -->
         <el-form-item prop="password" class="login_password">
           <el-input v-model="loginForm.password" prefix-icon="el-icon-lock" type="password" placeholder="密码"></el-input>
-          <el-link type="info" class="forget">忘记密码</el-link>
+          <el-link type="info" class="forget" @click="forgetPassword">忘记密码</el-link>
         </el-form-item>
         <!-- 验证码 -->
         <el-form-item prop="verification">
           <el-input v-model="loginForm.verification" prefix-icon="el-icon-key" placeholder="验证码"></el-input>
-          <div class="verification_box"></div>
+          <div class="verification_box" @click="refreshIdentifyCode">
+            <SIdentify :identifyCode="identifyCode">
+            </SIdentify>
+          </div>
         </el-form-item>
         <el-checkbox v-model="checked">记住用户名</el-checkbox>
         <!-- 按钮 -->
@@ -26,18 +29,40 @@
         </el-form-item>
       </el-form>
     </div>
+    <!-- 修改用户的对话框 -->
+    <el-dialog title="忘记密码" :visible.sync="forgetDialogVisible" width="30%" :close-on-click-modal="false">
+      <!-- 内容主体区 -->
+      <span>密码丢了我也没办法，自求多福吧(*^_^*)</span>
+      <!-- 底部区 -->
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="forgetDialogVisible=false">取 消</el-button>
+        <el-button type="primary" @click="forgetDialogVisible=false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import SIdentify from '@/components/SIdentify.vue'
+
 export default {
+  name: 'SIdentifys',
+  components: { SIdentify },
   data () {
+    // 验证手机号规则
+    const checkIdentifyCode = (rule, value, callback) => {
+      const identifyCode = this.loginForm.verification
+      if (identifyCode === this.identifyCode) return callback()
+      return callback(new Error('验证码错误'))
+    }
     return {
+      identifyCode: '', // 密码登录图形验证码
+      identifyCodes: '1234567890abcdefghizklmnopqrstuvwxyz', // 生成图形验证码的依据
       // 这是登录表单的数据绑定对象
       loginForm: {
-        username: 'Mr.Li',
-        password: '000000',
-        verification: '0000'
+        username: '',
+        password: '',
+        verification: ''
       },
       checked: false,
       // 这是表单验证规则对象
@@ -55,14 +80,19 @@ export default {
         // 验证验证码是否正确
         verification: [
           { required: true, message: '请输入验证码', trigger: 'blur' },
-          { min: 4, max: 4, message: '验证码不能超过4个字符', trigger: 'blur' }
+          { validator: checkIdentifyCode, trigger: 'blur' }
         ]
 
-      }
+      },
+      forgetDialogVisible: false
+
     }
   },
   mounted () {
     this.getCookie()
+    // 初始化验证码
+    this.identifyCode = ''
+    this.makeIdentifyCode(4)
   },
   methods: {
     login () {
@@ -102,8 +132,29 @@ export default {
           }
         }
       }
+    },
+    // 刷新验证码
+    refreshIdentifyCode () {
+      this.identifyCode = ''
+      this.makeIdentifyCode(4)
+    },
+    // 生成4位数的随机验证码
+    makeIdentifyCode (l) {
+      for (let i = 0; i < l; i++) {
+        this.identifyCode += this.identifyCodes[this.randomNum(0, this.identifyCodes.length)]
+      }
+    },
+    // 生成单个验证码
+    randomNum (min, max) {
+      return Math.floor(Math.random() * (max - min) + min)
+    },
+    // 忘记密码
+    forgetPassword () {
+      this.forgetDialogVisible = true
     }
+
   }
+
 }
 
 </script>

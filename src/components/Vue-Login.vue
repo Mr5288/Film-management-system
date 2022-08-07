@@ -49,11 +49,11 @@ export default {
   name: 'SIdentifys',
   components: { SIdentify },
   data () {
-    // 验证手机号规则
+    // 验证码规则
     const checkIdentifyCode = (rule, value, callback) => {
       const identifyCode = this.loginForm.verification
       if (identifyCode === this.identifyCode) return callback()
-      return callback(new Error('验证码错误'))
+      return callback(new Error('验证码错误'), this.refreshIdentifyCode())
     }
     return {
       identifyCode: '', // 密码登录图形验证码
@@ -173,15 +173,17 @@ export default {
 .login_box {
   width: 520px;
   height: 370px;
-  padding: 30px;
+  padding: 20px;
   margin-right: 8%;
   border-radius: 3px;
-  background: rgba(247, 247, 247, 0.9);
+  //border: 1px solid #fff;
+  background: rgba(247, 247, 247, 0);
 
   .login_title {
-    font-size: 28px;
+    font-size: 30px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    color: #fff;
   }
   .login_password {
     position: relative;

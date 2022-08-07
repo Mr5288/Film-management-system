@@ -55,7 +55,7 @@
           </el-form-item>
         </el-form>
         <p>
-          <el-button @click="drawer = false">取 消</el-button>
+          <el-button @click="drawers=false">取 消</el-button>
           <el-button type="primary" @click="editFoods">确 定</el-button>
         </p>
       </el-drawer>
